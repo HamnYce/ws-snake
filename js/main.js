@@ -18,61 +18,43 @@ function initScreen() {
 
 function moveSnake(e) {
   let code = e.keyCode;
-  
-  if (code == 119) moveHeadUp();// W, up
-  else if (code == 97) moveHeadLeft();// A, left
-  else if (code == 115) moveHeadDown();// S, down
-  else if (code == 100) moveHeadRight();// D, right
-}
-
-// TODO: abstract moveFunctions() to their own methods
-
-function moveHeadLeft() {
   let head = document.querySelector(".head");
   let coord = head.id.split('-');
+
+  console.log(code)
+
+  if (code == 119) moveHeadUp(head, coord);// W, up
+  else if (code == 97) moveHeadLeft(head, coord);// A, left
+  else if (code == 115) moveHeadDown(head, coord);// S, down
+  else if (code == 100) moveHeadRight(head, coord);// D, right
+}
+function moveHeadLeft(head, coord) {
   if (coord[1] == 0) return;
 
-  head.classList.toggle("head");
-  head = document.getElementById(
-    `${parseInt(coord[0])}-${parseInt(coord[1] ) - 1}`
-    );
-  head.classList.toggle("head")
+  changeHead(head, coord, [parseInt(coord[0]), parseInt(coord[1]) - 1]);
 }
-function moveHeadUp() {
-  let head = document.querySelector(".head");
-  let coord = head.id.split('-');
+function moveHeadUp(head, coord) {
   if (coord[0] == 0) return;
 
-  head.classList.remove("head");
-  head = document.getElementById(
-    `${parseInt(coord[0]) - 1}-${parseInt(coord[1])}`
-    ); 
-  head.classList.add("head")
+  changeHead(head, coord, [parseInt(coord[0]) - 1, parseInt(coord[1])]);
 }
-function moveHeadRight() {
-  let head = document.querySelector(".head");
-  let coord = head.id.split('-');
-
+function moveHeadRight(head, coord) {
   if (coord[1] == 9) return;
 
-  head.classList.toggle("head");
-  head = document.getElementById(
-    `${parseInt(coord[0])}-${parseInt(coord[1]) + 1}`
-    );
-  head.classList.toggle("head")
+  changeHead(head, coord, [parseInt(coord[0]), parseInt(coord[1]) + 1]);
 }
-function moveHeadDown() {
-  let head = document.querySelector(".head");
-  let coord = head.id.split('-');
+function moveHeadDown(head, coord) {
   if (coord[0] == 9) return;
 
+  changeHead(head, coord, [parseInt(coord[0]) + 1, parseInt(coord[1])]);
+}
+function changeHead(head, coord, newCoord) {
   head.classList.toggle("head");
   head = document.getElementById(
-    `${parseInt(coord[0]) + 1}-${parseInt(coord[1])}`
+    `${newCoord[0]}-${newCoord[1]}`
     );
   head.classList.toggle("head")
 }
-
 
 
 initScreen()
