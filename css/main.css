@@ -1,0 +1,30 @@
+body {
+  padding-top: 50px;
+  display: flex;
+  justify-content: center;
+  align-items: center;
+}
+
+#playground {
+  width: 500px;
+  height: 500px;
+  border: 1px solid black;
+  display: flex;
+  flex-wrap: wrap;
+}
+
+.snake-segment-empty {
+  width: 49px;
+  height: 49px;
+  border: 0.5px solid black;
+}
+
+.snake-segment-filled {
+  width: 49px;
+  height: 49px;
+  background-color: black;
+}
+
+.head {
+  background-color: red;
+}
