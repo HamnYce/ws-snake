@@ -1,5 +1,9 @@
 // w = 119, a = 97, s = 115, d = 100
 let globalIntervalCounter = 0;
+let movingLeft = false;
+let movingRight = false;
+let movingUp = false;
+let movingDown = false;
 
 function initScreen() {
   let root = document.getElementById("playground");
@@ -16,38 +20,60 @@ function initScreen() {
   window.addEventListener("keypress", moveSnake);
 
   // Init first head
-  document.getElementById("0-0").classList.add("head")
+  let x = Math.floor(Math.random()*10)
+  let y = Math.floor(Math.random()*10)
+  document.getElementById(`${x}-${y}`).classList.add("head")
 }
 
 function moveSnake(e) {
   let code = e.keyCode;
-  let head = document.querySelector(".head");
+  console.log(e)
 
-  if (code == 119) {// W, up
+  if (code == 119 && !movingUp && !movingDown) {// W, up
     clearInterval(globalIntervalCounter)
     globalIntervalCounter = autoMoveUp();
   }
-  else if (code == 97) {// A, left
+  else if (code == 97 && !movingLeft && !movingRight) {// A, left
     clearInterval(globalIntervalCounter)
     globalIntervalCounter = autoMoveLeft();
   }
-  else if (code == 115) {// S, down
+  else if (code == 115 && !movingDown && !movingUp) {// S, down
     clearInterval(globalIntervalCounter)
     globalIntervalCounter = autoMoveDown();
   }
-  else if (code == 100) {// D, right
+  else if (code == 100 && !movingRight && !movingLeft) {// D, right
     clearInterval(globalIntervalCounter)
     globalIntervalCounter = autoMoveRight();
   }
 }
 
-function autoMoveLeft() {return setInterval(moveLeftInterval, 250)}
+function autoMoveLeft() {
+  movingLeft = true;
+  movingUp = false;
+  movingRight = false;
+  movingDown = false;
+  return setInterval(moveLeftInterval, 150)}
 
-function autoMoveUp() {return setInterval(moveUpInterval, 250)}
+function autoMoveUp() {
+  movingLeft = false;
+  movingUp = true;
+  movingRight = false;
+  movingDown = false;
+  return setInterval(moveUpInterval, 150)}
 
-function autoMoveRight() {return setInterval(moveRightInterval, 250)}
+function autoMoveRight() {
+  movingLeft = false;
+  movingUp = false;
+  movingRight = true;
+  movingDown = false;
+  return setInterval(moveRightInterval, 150)}
 
-function autoMoveDown() {return setInterval(moveDownInterval,250)}
+function autoMoveDown() {
+  movingLeft = false;
+  movingUp = false;
+  movingRight = false;
+  movingDown = true;
+  return setInterval(moveDownInterval,150)}
 
 function moveLeftInterval() {
   let head = document.querySelector('.head')
